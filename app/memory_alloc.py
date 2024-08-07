@@ -42,8 +42,9 @@ class SimulateMemoryAllocator:
             # updates the physical memory to indicate it is being used
             self.memory[free_frame] = 1
 
+        frame_number = self.page_table[page_number]
         # physical address to be returned
-        return (frame_number << self.page_size) | offset
+        return (frame_number << self.page_size) | offset  # Wrong
 
     def simulate_list_addresses(self, virtual_addresses):
         # gets the physical address for each virtual address that is passed in the list

@@ -1,5 +1,5 @@
-from utils import address_transformer_str_to_bit
 from memory_alloc import SimulateMemoryAllocator
+from utils import address_transformer_str_to_bit
 
 print("** MEMORY MANAGER SIMULATOR **")
 virtual_mem_size = input("Enter the virtual memory size: 2^")
@@ -16,7 +16,6 @@ str_virtual_addresses = input(
     "Enter the virtual addresses to be translated into the physical one (please enter them in the format '0, 1, 2, 3, 4, 5'):"
 )
 bits_virtual_addresses = address_transformer_str_to_bit(str_virtual_addresses)
-
 # need to use the memory allocator
 mem_alloc = SimulateMemoryAllocator(virtual_mem_size, physical_mem_size, page_size)
 physical_addresses = mem_alloc.simulate_list_addresses(bits_virtual_addresses)
