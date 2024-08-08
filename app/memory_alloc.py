@@ -25,8 +25,7 @@ class SimulateMemoryAllocator:
         page_number = virtual_address >> self.page_size  # gets the page number
         mask = (1 << self.page_size) - 1
         offset = virtual_address & mask  # gets the offset
-    
-        
+
         # if its -1, it means that the page is not in the physical memory yet
         if self.page_table[page_number] == -1:
             try:
@@ -39,16 +38,24 @@ class SimulateMemoryAllocator:
             self.page_table[page_number] = free_frame
             # updates the physical memory to indicate it is being used
             self.memory[free_frame] = 1
-            
+
         # gets the value in the page table position to the page number
         frame_number = self.page_table[page_number]
-        
+
         # physical address to be returned
-        return (frame_number << self.page_size) | offset  # Wrong
+        return (frame_number << self.page_size) | offset
 
     def simulate_list_addresses(self, virtual_addresses):
         # gets the physical address for each virtual address that is passed in the list
-        return [
-            self.get_physical_address(virtual_address)
-            for virtual_address in virtual_addresses
-        ]
+        pa = []
+        for va in virtual_addresses:
+            try:
+                pa.append(self.get_physical_address(va))
+            except MemoryError:
+                # memory ends, the simulator breaks
+                pa.append("No more memory available")
+                return pa
+            except ValueError:
+                pa.append("Virtual address is out of range")
+
+        return pa
