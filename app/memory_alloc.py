@@ -25,9 +25,10 @@ class SimulateMemoryAllocator:
         page_number = virtual_address >> self.page_size  # gets the page number
         mask = (1 << self.page_size) - 1
         offset = virtual_address & mask  # gets the offset
-
+    
+        
         # if its -1, it means that the page is not in the physical memory yet
-        if frame_number == -1:
+        if self.page_table[page_number] == -1:
             try:
                 # looks for a free frame in the physical memory
                 free_frame = self.memory.index(0)
